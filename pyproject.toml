@@ -1,0 +1,64 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "caldera"
+version = "0.1.0"
+description = "A thermodynamics library for my own usage, but feel free to use this, too."
+readme = "README.md"
+authors = [
+    { name = "Logan Dapp", email = "logan@logand.app" }
+]
+license = { file = "LICENSE" }
+requires-python = ">=3.10"
+keywords = ["thermodynamics", "engineering", "enthalpy", "multiphase", "flash"]
+
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Scientific/Engineering :: Physics"
+]
+dependencies = [
+    "numpy>=2.1.0",
+    "pint",
+    "loguru"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "isort",
+    "mypy",
+    "black",
+    "ruff"
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-v"
+testpaths = ["tests"]
+
+[tool.isort]
+profile = "black"
+line_length = 100
+multi_line_output = 3
+include_trailing_comma = true
+
+[tool.black]
+line-length = 100
+target-version = ["py310"]
+
+[tool.mypy]
+strict = true
+ignore_missing_imports = true
+
+[tool.ruff]
+line-length = 100
+select = ["E", "F", "I"]

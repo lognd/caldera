@@ -36,7 +36,7 @@ class UnitParseError(CalderaError):
         super().__init__(f'Could not parse string, "{value}", into quantity.')
 
 
-class InvalidUnitError(CalderaError):
+class UnitTypeError(CalderaError):
     """Raised when a pint.Quantity has the wrong units."""
 
     def __init__(self, expected: str, actual: str):

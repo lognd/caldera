@@ -1,22 +1,30 @@
-from pint import Quantity, UnitRegistry
+import re
+
+from pint import Quantity
 from pint.errors import DimensionalityError, UndefinedUnitError
 
 from .errors import *
 
-_UREG = UnitRegistry()
+_QUANTITY_REGEX = re.compile(r"^\s*(?P<value>[-+]?[\d.]+(?:e[-+]?\d+)?)\s*(?P<unit>.+)$")
 
 
 def ensure_quantity(value: str | float | Quantity, unit: str) -> float:
     if isinstance(value, str):
         try:
-            value = _UREG.parse_expression(value, preprocessors=True)
+            groups = _QUANTITY_REGEX.match(value)
+            if not groups:
+                raise UnitParseError(str(value))
+
+            value_str = groups.group("value")
+            unit_str = groups.group("unit").strip()
+            value = Quantity(float(value_str), unit_str)
         except (UndefinedUnitError, ValueError) as e:
             raise UnitParseError(str(value)) from e
     if isinstance(value, Quantity):
         try:
             return float(value.to(unit).magnitude)
         except DimensionalityError as e:
-            raise InvalidUnitError(unit, str(value.units)) from e
+            raise UnitTypeError(unit, str(value.units)) from e
     elif isinstance(value, float | int):
         return value
     else:

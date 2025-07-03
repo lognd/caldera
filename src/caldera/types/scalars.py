@@ -1,5 +1,6 @@
-from pydantic import Field
 from typing import Annotated
+
+from pydantic import Field
 
 Temperature = Annotated[float, Field("Temperature in K (kelvin)")]
 Pressure = Annotated[float, Field("Pressure in Pa (pascals)")]

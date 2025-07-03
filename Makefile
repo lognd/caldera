@@ -19,7 +19,7 @@ venv:
 	@$(VENV_PYTHON) -m pip install --upgrade pip
 	@$(VENV_PIP) install --upgrade setuptools
 
-build: clean venv preinstall uninstall reinstall
+build: clean preinstall uninstall reinstall
 
 preinstall:
 	@echo "Installing pre-install dependencies"

@@ -32,7 +32,6 @@ goto :eof
 
 :build
 call :clean
-call :venv
 call :preinstall
 call :uninstall
 call :reinstall

@@ -1,7 +1,7 @@
 from pydantic import BaseModel, field_validator
 
-from ..types.scalars import Temperature, Pressure, SpecificVolume, SpecificInternalEnergy, SpecificEnthalpy, SpecificEntropy
-from ..unit_converter import ensure_quantity
+from caldera.types.scalars import Temperature, Pressure, SpecificVolume, SpecificInternalEnergy, SpecificEnthalpy, SpecificEntropy
+from caldera.unit_converter import ensure_quantity
 
 class ThermoState(BaseModel):
     temperature: Temperature

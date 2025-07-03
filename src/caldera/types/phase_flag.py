@@ -3,7 +3,9 @@ from __future__ import annotations
 from enum import IntFlag
 
 from pydantic import BaseModel, Field, field_validator
+
 from ..errors import *
+
 
 class PhaseState(BaseModel):
     flag: PhaseFlag = Field(..., description="Bitmask representing the phase and modifiers...")

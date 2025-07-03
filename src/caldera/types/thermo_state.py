@@ -1,8 +1,7 @@
-from typing import Union
-
 from pint import Quantity
 from pydantic import BaseModel, field_validator
 
+from ..errors import *
 from ..types.scalars import (
     Pressure,
     SpecificEnthalpy,
@@ -12,7 +11,6 @@ from ..types.scalars import (
     Temperature,
 )
 from ..unit_converter import ensure_quantity
-from ..errors import *
 
 Parsable = Quantity | float | int | str
 

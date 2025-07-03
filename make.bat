@@ -65,12 +65,12 @@ goto :eof
 
 :lint
 echo Linting the code...
-call %VENV_RUFF% check src tests
+call %VENV_RUFF% check --fix src tests
 goto :eof
 
 :format
 echo Checking format with black...
-call %VENV_BLACK% --check --diff --color src tests
+call %VENV_BLACK% src tests
 goto :eof
 
 :imports

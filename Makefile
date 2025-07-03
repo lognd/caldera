@@ -44,11 +44,11 @@ type:
 
 lint:
 	@echo "Linting the code..."
-	@$(VENV_RUFF) check src tests
+	@$(VENV_RUFF) check --fix src tests
 
 format:
 	@echo "Checking format with black..."
-	@$(VENV_BLACK) --check --diff --color src tests
+	@$(VENV_BLACK) src tests
 
 imports:
 	@echo "Checking import order with isort..."

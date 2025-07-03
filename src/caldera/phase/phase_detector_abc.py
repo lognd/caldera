@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
-from ..types import PhaseState, Temperature, Pressure
+
+from ..types import PhaseState
+from ..types.scalars import Temperature, Pressure
 
 class PhaseDetectorABC(ABC):
     @abstractmethod

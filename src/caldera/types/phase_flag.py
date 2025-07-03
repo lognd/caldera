@@ -6,7 +6,7 @@ class PhaseState(BaseModel):
     flag: PhaseFlag = Field(..., description="Bitmask representing the phase and modifiers...")
 
     @field_validator("flag")
-    def check_phase_flag(self, v):
+    def check_phase_flag(cls, v):
         if not validate_phase_flag(v):
             raise ValueError(f"Invalid PhaseFlag combination: {v}")
         return v

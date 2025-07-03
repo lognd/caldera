@@ -25,7 +25,8 @@ classifiers = [
 dependencies = [
     "numpy>=2.1.0",
     "pint",
-    "loguru"
+    "loguru",
+    "pydantic"
 ]
 
 [project.optional-dependencies]
@@ -58,6 +59,7 @@ target-version = ["py310"]
 [tool.mypy]
 strict = true
 ignore_missing_imports = true
+plugins = pydantic.mypy
 
 [tool.ruff]
 line-length = 100

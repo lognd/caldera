@@ -12,8 +12,9 @@ from ..types.scalars import (
     Temperature,
 )
 from ..unit_converter import ensure_quantity
+from ..errors import *
 
-Parsable = Union[Quantity, float, int, str]
+Parsable = Quantity | float | int | str
 
 
 class ThermoState(BaseModel):
@@ -25,34 +26,34 @@ class ThermoState(BaseModel):
     specific_entropy: SpecificEntropy
 
     @field_validator("temperature", mode="before")
-    def validate_temperature(cls, v: Parsable) -> Temperature:
+    def validate_temperature(self, v: Parsable) -> Temperature:
         v = ensure_quantity(v, "K")
         if v < 0.0:
-            raise ValueError("Temperature must be above 0 K.")
+            raise ValueBoundsError(v, 0, unit="K")
         return v
 
     @field_validator("pressure", mode="before")
-    def validate_pressure(cls, v: Parsable) -> Pressure:
+    def validate_pressure(self, v: Parsable) -> Pressure:
         v = ensure_quantity(v, "Pa")
         if v < 0.0:
-            raise ValueError("Pressure must be above 0 Pa.")
+            raise ValueBoundsError(v, 0, unit="Pa")
         return v
 
     @field_validator("specific_volume", mode="before")
-    def validate_specific_volume(cls, v: Parsable) -> SpecificVolume:
+    def validate_specific_volume(self, v: Parsable) -> SpecificVolume:
         v = ensure_quantity(v, "m^3/kg")
         if v < 0.0:
-            raise ValueError("Specific volume must be above 0 m^3/kg.")
+            raise ValueBoundsError(v, 0, unit="m^3/kg")
         return v
 
     @field_validator("specific_internal_energy", mode="before")
-    def validate_specific_internal_energy(cls, v: Parsable) -> SpecificInternalEnergy:
+    def validate_specific_internal_energy(self, v: Parsable) -> SpecificInternalEnergy:
         return ensure_quantity(v, "J/kg")
 
     @field_validator("specific_enthalpy", mode="before")
-    def validate_specific_enthalpy(cls, v: Parsable) -> SpecificEnthalpy:
+    def validate_specific_enthalpy(self, v: Parsable) -> SpecificEnthalpy:
         return ensure_quantity(v, "J/kg")
 
     @field_validator("specific_entropy", mode="before")
-    def validate_specific_entropy(cls, v: Parsable) -> SpecificEntropy:
+    def validate_specific_entropy(self, v: Parsable) -> SpecificEntropy:
         return ensure_quantity(v, "J/kg/K")

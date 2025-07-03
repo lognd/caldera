@@ -1,4 +1,7 @@
 from pint import Quantity, UnitRegistry
+from pint.errors import DimensionalityError, UndefinedUnitError
+
+from .errors import *
 
 _UREG = UnitRegistry()
 
@@ -7,14 +10,14 @@ def ensure_quantity(value: str | float | Quantity, unit: str) -> float:
     if isinstance(value, str):
         try:
             value = _UREG.parse_expression(value, preprocessors=True)
-        except Exception:
-            raise ValueError(f'Could not parse string, "{value}", into quantity.')
+        except (UndefinedUnitError, ValueError) as e:
+            raise UnitParseError(str(value)) from e
     if isinstance(value, Quantity):
         try:
             return float(value.to(unit).magnitude)
-        except Exception:
-            raise ValueError(f"Expected a quantity in `{unit}`, got `{value.units}`.")
+        except DimensionalityError as e:
+            raise InvalidUnitError(unit, str(value.units)) from e
     elif isinstance(value, float | int):
         return value
     else:
-        raise TypeError(f"Expected float, str, or Quantity, got `{type(value)}`.")
+        raise TypeError

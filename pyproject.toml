@@ -67,5 +67,5 @@ warn_required_dynamic_aliases = true
 
 [tool.ruff]
 line-length = 100
-ignore = ["E701", "E501", "TID252", "N803", "S101", "INP001", "D"]
-select = ["ALL"]
+lint.ignore = ["E701", "E501", "TID252", "N803", "S101", "INP001", "D", "F403", "F405", "PLR2004", "ANN204"]
+lint.select = ["ALL"]

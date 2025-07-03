@@ -3,20 +3,20 @@ from __future__ import annotations
 from enum import IntFlag
 
 from pydantic import BaseModel, Field, field_validator
-
+from ..errors import *
 
 class PhaseState(BaseModel):
     flag: PhaseFlag = Field(..., description="Bitmask representing the phase and modifiers...")
 
     @field_validator("flag")
-    def check_phase_flag(cls, v: PhaseFlag) -> PhaseFlag:
+    def check_phase_flag(self, v: PhaseFlag) -> PhaseFlag:
         if not validate_phase_flag(v):
-            raise ValueError(f"Invalid PhaseFlag combination: {v}")
+            raise InvalidPhaseError(v)
         return v
 
 
 def validate_phase_flag(phase_flag: PhaseFlag) -> bool:
-    if phase_flag <= 0 or phase_flag > 255:
+    if phase_flag <= 0 or phase_flag > 0xFF:
         return False
     base = phase_flag & PhaseFlag.BASE
     modifier = phase_flag & PhaseFlag.MODIFIER

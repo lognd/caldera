@@ -59,7 +59,11 @@ target-version = ["py310"]
 [tool.mypy]
 strict = true
 ignore_missing_imports = true
-plugins = pydantic.mypy
+plugins = ["pydantic.mypy"]
+
+[tool.pydantic-mypy]
+init_typed = true
+warn_required_dynamic_aliases = true
 
 [tool.ruff]
 line-length = 100

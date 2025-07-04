@@ -1,3 +1,3 @@
-from .phase_flag import PhaseFlag, PhaseState
+from .phase import PhaseFlag, PhaseState
 
 __all__ = ["PhaseFlag", "PhaseState"]

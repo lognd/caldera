@@ -11,7 +11,8 @@ class PhaseState(BaseModel):
     flag: PhaseFlag = Field(..., description="Bitmask representing the phase and modifiers...")
 
     @field_validator("flag")
-    def check_phase_flag(self, v: PhaseFlag) -> PhaseFlag:
+    @classmethod
+    def check_phase_flag(cls, v: PhaseFlag) -> PhaseFlag:
         if not validate_phase_flag(v):
             raise InvalidPhaseError(v)
         return v
@@ -79,3 +80,9 @@ class PhaseFlag(IntFlag):
     CRITICAL = 0b00010000
     METASTABLE = 0b00100000
     SPINODAL = 0b01000000
+
+    def __repr__(self) -> str:
+        if self == PhaseFlag.NONE:
+            return "PhaseFlag.NONE"
+        parts = [str(f.name) for f in PhaseFlag if f != PhaseFlag.NONE and f in self]
+        return f"PhaseFlag({' | '.join(parts)})"

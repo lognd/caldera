@@ -55,7 +55,7 @@ goto :eof
 
 :test
 echo Running tests...
-call %VENV_PYTEST% -v --tb=short --maxfail=5
+call %VENV_PYTEST% -q --tb=short --maxfail=5
 goto :eof
 
 :type
